@@ -1,0 +1,308 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{hanging}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{listings}
+\usepackage{mdframed}
+\usepackage{pifont}
+%\usepackage{lipsum} %remove later
+\doublespacing
+%\setlength\parindent{28 pt}
+\geometry{letterpaper, margin=1in}
+
+% ++++ Color definitions ++++
+\definecolor{highcol}{HTML}{C00000}
+\definecolor{medcol}{HTML}{BF8F00}
+\definecolor{lowcol}{HTML}{375623}
+\definecolor{immediatecol}{HTML}{C00000}
+\definecolor{shortcol}{HTML}{E26B0A}
+\definecolor{longcol}{HTML}{375623}
+\definecolor{headercol}{HTML}{1F4E79}
+\definecolor{lightyellow}{HTML}{FFF2CC}
+\definecolor{lightgreen}{HTML}{EBF1DD}
+\definecolor{lightred}{HTML}{FFD7D7}
+\definecolor{lightgray}{HTML}{EDEDED}
+\definecolor{codebg}{HTML}{F5F5F5}
+\definecolor{codeframe}{HTML}{CCCCCC}
+\definecolor{impactbg}{HTML}{FFF2CC}
+\definecolor{impactframe}{HTML}{BF8F00}
+\definecolor{verifybg}{HTML}{EBF1DD}
+\definecolor{verifyframe}{HTML}{375623}
+\definecolor{warnbg}{HTML}{FFD7D7}
+\definecolor{warnframe}{HTML}{C00000}
+\definecolor{notebg}{HTML}{DDEEFF}
+\definecolor{noteframe}{HTML}{1F4E79}
+\definecolor{checkbg}{HTML}{F2F2F2}
+\definecolor{checkframe}{HTML}{595959}
+\definecolor{acccol}{HTML}{1F4E79}
+\definecolor{transcol}{HTML}{375623}
+\definecolor{integcol}{HTML}{7030A0}
+\definecolor{authcol}{HTML}{C00000}
+\definecolor{immediatecol}{HTML}{C00000}
+\definecolor{shortcol}{HTML}{E26B0A}
+\definecolor{longcol}{HTML}{375623}
+\definecolor{totalrowcol}{HTML}{D9E1F2}
+\definecolor{subtotalcol}{HTML}{F2F2F2}
+ 
+
+% ++++ Convenience macros ++++
+% Severity badge: \sevbadge{colour}{label}
+\newcommand{\sevbadge}[2]{%
+  \colorbox{#1}{\color{white}\textbf{\small #2}}%
+}
+ 
+% Timeframe badge
+\newcommand{\tfbadge}[2]{%
+  \colorbox{#1}{\color{white}\textbf{\small #2}}%
+}
+ 
+% Header row cell (white text on dark blue)
+\newcommand{\hcell}[1]{%
+  \cellcolor{headercol}\color{white}\textbf{#1}%
+}
+
+\newcommand{\sectionrule}{%
+  \vspace{4pt}\noindent\textcolor{headercol}{\rule{\linewidth}{0.8pt}}\vspace{4pt}%
+}
+
+\newcommand{\hipbadge}[2]{%
+  \colorbox{#1}{\color{white}\textbf{\small #2}}%
+}
+
+% Checkbox item
+\newcommand{\cbox}{\ding{113}\;}
+
+% ── Listings style (terminal / config blocks) ────────────────────────────
+\lstdefinestyle{terminal}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  breakatwhitespace=false,
+  frame=single,
+  rulecolor=\color{codeframe},
+  xleftmargin=8pt,
+  xrightmargin=8pt,
+  aboveskip=6pt,
+  belowskip=6pt,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+}
+ 
+% ── Framed boxes ─────────────────────────────────────────────────────────
+\newmdenv[
+  backgroundcolor=impactbg,
+  linecolor=impactframe,
+  linewidth=1.2pt,
+  innerleftmargin=8pt,
+  innerrightmargin=8pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+  skipabove=6pt,
+  skipbelow=6pt,
+]{impactbox}
+ 
+\newmdenv[
+  backgroundcolor=verifybg,
+  linecolor=verifyframe,
+  linewidth=1.2pt,
+  innerleftmargin=8pt,
+  innerrightmargin=8pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+  skipabove=6pt,
+  skipbelow=6pt,
+]{verifybox}
+ 
+\newmdenv[
+  backgroundcolor=warnbg,
+  linecolor=warnframe,
+  linewidth=1.2pt,
+  innerleftmargin=8pt,
+  innerrightmargin=8pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+  skipabove=6pt,
+  skipbelow=6pt,
+]{warnbox}
+
+\newmdenv[
+  backgroundcolor=notebg,
+  linecolor=noteframe,
+  linewidth=1.2pt,
+  innerleftmargin=8pt,
+  innerrightmargin=8pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+  skipabove=6pt,
+  skipbelow=6pt,
+]{notebox}
+
+\newmdenv[
+  backgroundcolor=checkbg,
+  linecolor=checkframe,
+  linewidth=1.2pt,
+  innerleftmargin=8pt,
+  innerrightmargin=8pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+  skipabove=6pt,
+  skipbelow=6pt,
+]{checklistbox}
+
+% ++++ Fancy Settings (for header) ++++
+\pagestyle{plain}
+\fancypagestyle{main}{
+	\fancyhf{}
+	\lhead{Malware Analysis}
+	\rhead{\leftmark}
+	\cfoot{\thepage}
+	\renewcommand{\headrulewidth}{0.4pt}
+}
+
+% Column widths (tweak the numbers if you want)
+\newcommand{\colNum}{0.06\linewidth}   % column 1 (1–10)
+\newcommand{\colSmall}{0.16\linewidth} % columns 2,3,5
+\newcommand{\colBig}{0.48\linewidth}   % column 4 (3x colSmall)
+
+% ++++ Begin Doc ++++
+
+\begin{document}
+
+% ++++ Cover Page ++++
+
+\begin{titlepage}
+\centering
+\vfill
+
+% ++Logo
+\includegraphics[width=0.35\textwidth]{images/logo.png}
+
+\vspace{1.5cm}
+
+% ++Title
+\LARGE{\textbf{Lab 11: Malware Analysis}}\\
+\vspace{0.3cm}
+\large{\textbf{Keith Schoen}}\\
+\vspace{0.3cm}
+\large{\textbf{CSEC3755-001}}\\
+\vspace{0.3cm}
+\large{\textbf{Dr. Daniel Pittman}}\\
+\vspace{0.3cm}
+\large{\textbf{30 April 2026}}\\
+\vspace{0.3cm}
+
+\vfill
+\end{titlepage}
+
+% ++++ ToC ++++
+
+\pagenumbering{gobble} %hide page numbers for cover and ToC
+\tableofcontents
+\clearpage
+
+% ++++ Begin Report ++++
+
+\pagenumbering{arabic} %page one starts here
+\setcounter{page}{1}
+\pagestyle{main} %turn on fancy
+
+% ++++ Executive Summary ++++
+\section{Executive Summary}
+
+% ++++ Part01 Triage & File Identification
+\section{Triage \& File Identification}
+\smallskip
+\begin{notebox}
+\textbf{Note about this section:}\\
+I began this lab with the Windows environment that I have been using for the entire
+semester. When running the EICAR test, I was receiving no reaction from Windows Defender.
+I attempted numerous workarounds, troubleshooting techniques and tests but Defender never 
+caught onto the code. To make sure that my eyes were not failing, I ran a comparison algoithm 
+on the test command and ask Claude to double check my input as well and it was confirmed that
+the command was correct and Defender should have flagged it. With all of these steps taken,
+I decided to begin the lab again with a fresh Windows build.
+\end{notebox}
+
+% ++++ Part02 Static Analysis ++++
+\section{Static Analysis}
+
+% ++++ Part03 Dynamic Analysis ++++
+\section{Dynamic Analysis}
+
+% ++++ Part04 IOC Report & Detection ++++
+\section{IOC Report \& Detection}
+
+\vfill
+\textit{++report written and formatted with help from Claude (Sonnet 4.6)++}
+\end{document}
+
+% +++++++++ Helpful stuff +++++++++++
+%
+% +++ Terminal-style box +++
+%\begin{lstlisting}[style=terminal]
+%apt-get update && apt-get install -y iptables-persistent
+%\end{lstlisting}
+
+
+% +++ Fixed width table +++
+%\begin{tabularx}{1.0\textwidth}{
+%	|| >{\raggedright\arraybackslash}X
+%	|  >{\raggedright\arraybackslash}X
+%	|  >{\raggedright\arraybackslash}X
+%	|  >{\raggedright\arraybackslash}X || }
+%	\hline
+%	\textbf{x} & \textbf{x} & \textbf{x} & \textbf{x} \\
+%	\hline \hline
+%	x $ x $ x & x & x & x  \\
+%	\hline
+%	x $ x $ x & x & x & x \\
+%	\hline
+%	x $ x $ x & x & x & x \\
+%	\hline
+%	x $ x $ x & x &  x  & x \\
+%	\hline
+%\end{tabularx}
+%
+
+% +++ For tables that take multiple pages +++
+%{\singlespacing
+%	\begin{longtable}{
+% 		|| >{\centering\arraybackslash}p{\colNum}
+%  		| >{\raggedright\arraybackslash}p{\colSmall}
+%  		| >{\raggedright\arraybackslash}p{\colSmall}
+%  		| >{\raggedright\arraybackslash}p{\colBig}
+%  		| >{\raggedright\arraybackslash}p{\colSmall} ||}
+%		\hline
+%		\textbf{x} & \textbf{x} & \textbf{x} & \textbf{x} & \textbf{x} \\
+%		\hline\hline
+%		\endhead
+%		\hline
+%  	    	 x & x & x & x  & x \\
+%		\hline
+%	\end{longtable}
+%}
+
+
+
+
+
+
+
+
+
+
+
+
