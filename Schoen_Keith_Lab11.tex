@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[10pt]{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{fancyhdr}
@@ -57,6 +57,7 @@
 \definecolor{longcol}{HTML}{375623}
 \definecolor{totalrowcol}{HTML}{D9E1F2}
 \definecolor{subtotalcol}{HTML}{F2F2F2}
+\definecolor{rowgray}{gray}{0.93}
  
 
 % ++++ Convenience macros ++++
@@ -324,14 +325,14 @@ how it works at a basic level:\\
 \subsection{Choose a Real Malware Sample (Sample B)}
 \bigskip
 \begin{warnbox}
-\textbf{Note about malware selection for Sample B}\\
+\textbf{Note about malware selection for Sample B - XWORM}\\
 \textbf{SHA256 Hash:}939b247d1cf5a8b674ff632365af9982256363d6ae390876d0d3d9cbc07d163b\\
 \textbf{Malware Family:} phantomstealer\\
 \textbf{First submission to VT:} 2026-04-30 07:14:26 UTC\\
 \textbf{VT Report URL:}\\
 	https://www.virustotal.com/gui/file/939b247d1cf5a8b674ff632365af9982256363d6ae3908\\ 76d0d3d9cbc07d163b/summary\\
-\textbf{Hybrid Analysis Report URL:}\\
-	https://hybrid-analysis.com/sample/939b247d1cf5a8b674ff632365af9982256363d6ae39087\\ 6d0d3d9cbc07d163b/69f301586d9a87d56d06d3b7\\
+\textbf{ANY.RUN Report URL:}\\
+	https://any.run/report/939b247d1cf5a8b674ff632365af9982256363d6ae390876d0d3d9cbc0\\ 7d163b/45507e5c-bc86-405f-bc18-2b912cf28181\\
 \ \\
 Honestly, I decided on a RAT because I like the animal and the malware category. When I did
 quick overview, this one had tons of documentation making it an easy first grab. Along with
@@ -342,9 +343,7 @@ brand-new submission to VT (about 3 hours old). It's a great pick for Sample B.
 \textbf{Detection Tab}
 \begin{itemize}
 	\item \textbf{Detection Ratio:} 39/71
-	\item This maleware is new so there isn't a name yet, but common themes include RAT, MSIL, 
-	and Trojan. Skyhigh(SWG) seems to be the only AV that has given it a name so far: "Artemis!Trojan".
-	The 'popular threat label' is \underbar{trojan.msil/phantomstealer}.
+	\item \textbf{XWORM}
 	\item \textbf{Family:} phantomstealer
 \end{itemize}
 \textbf{Details Tab}
@@ -411,6 +410,216 @@ brand-new submission to VT (about 3 hours old). It's a great pick for Sample B.
 
 % ++++ Part03 Dynamic Analysis ++++
 \section{Dynamic Analysis}
+\begin{notebox}
+	Information from this section was obtained from the report created at the ANY.RUN link given at the beginning
+	of section 3.
+\end{notebox}
+\subsection{Analyzing the Execution Timeline}
+\subsubsection{Process Activity}
+\begin{itemize}
+	\item The application launches itself via .exe file
+	\item The initial application launches multiple child processes (exe.exe (\#XWORM), schtasks.exe, and conhost.exe)
+	\item Injected into explorer.exe, svchost.exe, and system32.exe
+	\item For each process needed to gather information to send back the the C2, exe.exe runs schtasks.exe to run legitimate
+	windows applications (such as PDF FILE PREVIEWER) for future tasks.
+\end{itemize}
+\subsubsection{File System Activity}
+\begin{itemize}
+	\item This malware did not create any new files.
+	\item Five executables were dropped
+	\begin{itemize}
+		\item \texttt{\scriptsize{C:\textbackslash Users\textbackslash admin\textbackslash AppData\textbackslash Local\textbackslash Temp\textbackslash p3zwhafveql.ps1}}
+		\item \texttt{\scriptsize{C:\textbackslash Users\textbackslash admin\textbackslash AppData\textbackslash Roaming\textbackslash system32.exe}}
+		\item \texttt{\scriptsize{C:\textbackslash Users\textbackslash admin\textbackslash AppData\textbackslash Roaming\textbackslash Microsoft\textbackslash Windows\textbackslash Start Menu\textbackslash Programs\textbackslash Startup\textbackslash system32.lnk}}
+		\item \texttt{\scriptsize{C:\textbackslash Users\textbackslash admin\textbackslash AppData\textbackslash Roaming\textbackslash Microsoft\textbackslash Windows\textbackslash Start Menu\textbackslash Programs\textbackslash Startup\textbackslash ivrbDjKYgQZkne.lnk}}
+		\item \texttt{\scriptsize{C:\textbackslash Users\textbackslash admin\textbackslash AppData\textbackslash Roaming\textbackslash ivrbDjKYgQZkne.exe}}
+	\end{itemize}
+	\item Rewrote \texttt{C:\textbackslash Users\textbackslash admin\textbackslash AppData\textbackslash Roaming\textbackslash system32.exe}
+	\item There were no \textbf{delete events}.
+\end{itemize}
+\subsubsection{Registry Activity}
+There was one modification event that showed evidence of persistence:
+\begin{itemize}
+	\item \scriptsize{\textbf{{PID} Process:} (6856) exe.exe}
+	\item \scriptsize{\textbf{Operation:} Write}
+	\item \scriptsize{\textbf{Value:} C:\textbackslash Users\textbackslash admin\textbackslash AppData\textbackslash Roaming\textbackslash system32.exe}
+	\item \scriptsize{\textbf{Key:} \small{HKEY\underbar{   }CURRENT\underbar{   }USER\textbackslash SOFTWARE\textbackslash Microsoft\textbackslash Windows\textbackslash CurrentVersion\textbackslash Run}}
+	\item \scriptsize{\textbf{Name:} system32}
+\end{itemize}
+\subsubsection{Network Activity}
+\begin{itemize}
+	\item All network activity was whitelisted and looked legitimate. However, there is one malicious connection:
+	\begin{itemize}
+		\item \scriptsize{\textbf{PID} 6956}
+		\item \scriptsize{\textbf{PROCESS} exe.exe}
+		\item \scriptsize{\textbf{IP} 158.94.211.33:7017}
+		\item \scriptsize{\textbf{DOMAIN} N/A}
+		\item \scriptsize{\textbf{ASN} OMEGATECH-AS}
+		\item \scriptsize{\textbf{CN} SC}
+		\item \scriptsize{\textbf{REPUTATION} Malicious}
+	\end{itemize}
+	\item 'Whitelisted' activty included HTTP requests and connections to DELL and Microsoft services, and DNS requests to 
+	Microsoft and Google services.
+	\item Activity strongly indicates \textbf{command and control} activity meaning all data could potentially be extracted.
+\end{itemize}
+\subsection{Connecting to L24 Concepts}
+he following table maps each observed behavior from the ANY.RUN sandbox report of
+Sample B (SHA256: \texttt{939b247d...d163b}, identified as \textbf{XWorm RAT}) to
+the specific detection tools and techniques covered in Lecture 24.
+Each row answers: \emph{what did the malware do, which L24 tool would catch it, and
+what would that tool actually show?}
+ 
+\vspace{1em}
+ 
+\renewcommand{\arraystretch}{1.6}
+\begin{longtable}{>{\raggedright\arraybackslash}p{3.8cm}
+                  >{\raggedright\arraybackslash}p{2.8cm}
+                  >{\raggedright\arraybackslash}p{8.4cm}}
+ 
+\toprule
+\textbf{Malware Behavior} &
+\textbf{L24 Tool} &
+\textbf{What You Would See} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Malware Behavior} & \textbf{L24 Tool} & \textbf{What You Would See} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+ 
+% Row 1
+\rowcolor{rowgray}
+\textbf{Execution from Temp.}
+\texttt{exe.exe} runs from \texttt{...\textbackslash Local\textbackslash Temp\textbackslash}
+(PID 2676), parent: \texttt{explorer.exe}.
+&
+Process Explorer; Sysmon EID 1
+&
+\textit{ProcExp:} \texttt{exe.exe} nested under \texttt{explorer.exe}; Image Path shows \texttt{Temp\textbackslash}; Verified Signer: \emph{(Not Verified)}.
+\textit{Sysmon EID 1:} \texttt{Image: ...Temp\textbackslash exe.exe | ParentImage: explorer.exe | IntegrityLevel: Medium | Hashes: SHA256=...} \\
+ 
+% Row 2
+\textbf{Self-relaunch.}
+\texttt{exe.exe} (PID 2676) spawns a second \texttt{exe.exe} (PID 6856); \texttt{system32.exe} repeats likewise.
+&
+Process Explorer; Sysmon EID 1
+&
+\textit{ProcExp:} Multiple \texttt{exe.exe} entries with \texttt{exe.exe} as parent --- identical parent/child binary is a hallmark of self-injection.
+\textit{Sysmon EID 1:} \texttt{Image = ParentImage = ...Temp\textbackslash exe.exe} repeated across PIDs. \\
+ 
+% Row 3
+\rowcolor{rowgray}
+\textbf{Defender exclusion via LOLBin.}
+\texttt{powershell.exe Add-MpPreference -ExclusionPath ...exe.exe} disables AV on the payload.
+&
+Autoruns; Sysmon EID 1
+&
+\textit{Autoruns:} Run-key entry (\texttt{system32}) survives \emph{Hide Microsoft Entries} because entry authorship is the malware, not Microsoft --- the exact LOLBin evasion from L24.
+\textit{Sysmon EID 1:} \texttt{Image: powershell.exe | CommandLine: Add-MpPreference -ExclusionPath ...exe.exe | ParentImage: ...exe.exe} \\
+ 
+% Row 4
+\textbf{Run-key persistence.}
+\texttt{HKCU\textbackslash...\textbackslash Run} key \texttt{system32} $\to$ \texttt{AppData\textbackslash Roaming\textbackslash system32.exe} (PID 6856, write).
+&
+Autoruns; Sysmon EID 13
+&
+\textit{Autoruns Logon tab:} Entry \texttt{system32} $\to$ \texttt{AppData\textbackslash Roaming\textbackslash system32.exe}; Publisher: \emph{(Not Verified)}; pink-tinted row.
+\textit{Sysmon EID 13:} \texttt{Key: HKCU\textbackslash...\textbackslash Run | Value: ...Roaming\textbackslash system32.exe | Process: exe.exe} \\
+ 
+% Row 5
+\rowcolor{rowgray}
+\textbf{Startup folder shortcuts.}
+Two \texttt{.lnk} files dropped to \texttt{Startup\textbackslash}: \texttt{system32.lnk} and \texttt{ivrbDjKYgQZkne.lnk}.
+&
+Autoruns; Sysmon EID 11
+&
+\textit{Autoruns Logon tab:} Both shortcuts listed; randomized name \texttt{ivrbDjKYgQZkne.lnk} immediately stands out.
+\textit{Sysmon EID 11:} \texttt{TargetFilename: ...\textbackslash Startup\textbackslash system32.lnk | Image: exe.exe} \\
+ 
+% Row 6
+\textbf{Payload dropped to AppData.}
+\texttt{system32.exe} and \texttt{ivrbDjKYgQZkne.exe} written to \texttt{AppData\textbackslash Roaming} to masquerade as a system binary.
+&
+Sysmon EID 11; Process Explorer
+&
+\textit{Sysmon EID 11:} \texttt{TargetFilename: ...Roaming\textbackslash system32.exe | Image: exe.exe}
+\textit{ProcExp:} When \texttt{system32.exe} runs, Path column shows \texttt{AppData\textbackslash Roaming\textbackslash} not \texttt{C:\textbackslash Windows\textbackslash System32} --- L24 triage step 5 red flag. \\
+ 
+% Row 7
+\rowcolor{rowgray}
+\textbf{Scheduled task (1-min interval).}
+\texttt{schtasks.exe /create /sc minute /mo 1 /tn "system32" /tr "...system32.exe"} run by \texttt{exe.exe} (PID 4656).
+&
+Autoruns; Sysmon EID 1
+&
+\textit{Autoruns Scheduled Tasks tab:} Task \texttt{system32} $\to$ \texttt{...Roaming\textbackslash system32.exe}, trigger: every 1 minute.
+\textit{Sysmon EID 1:} \texttt{Image: schtasks.exe | CommandLine: /create /sc minute /mo 1 /tn "system32" ... | ParentImage: ...exe.exe} \\
+ 
+% Row 8
+\textbf{C2 beacon (XWorm TCP).}
+\texttt{exe.exe} (PID 6856) opens TCP to \texttt{158.94.211.33:7017} (OMEGATECH-AS); flagged \emph{Malicious} by Suricata.
+&
+TCPView; Sysmon EID 3
+&
+\textit{TCPView:} \texttt{exe.exe | ESTABLISHED | 158.94.211.33:7017} visible in real time; port 7017 is non-standard.
+\textit{Sysmon EID 3:} \texttt{Image: ...exe.exe | DestinationIp: 158.94.211.33 | DestinationPort: 7017 | Protocol: tcp} --- attributes network traffic to the process, which tcpdump alone cannot. \\
+ 
+% Row 9
+\rowcolor{rowgray}
+\textbf{DNS connectivity check.}
+UDP to \texttt{8.8.8.8:53} from \texttt{exe.exe} before C2 contact.
+&
+Sysmon EID 3; tcpdump
+&
+\textit{Sysmon EID 3:} \texttt{Image: exe.exe | DestinationIp: 8.8.8.8 | DestinationPort: 53 | Protocol: udp}
+\textit{tcpdump:} \texttt{sudo tcpdump -i any -n port 53} shows UDP query to \texttt{8.8.8.8} from the host, providing a network-layer view independent of the host OS. \\
+ 
+% Row 10
+\textbf{PS1 staging script dropped.}
+\texttt{p3zwhafveql.ps1} written to \texttt{AppData\textbackslash Local\textbackslash Temp} by \texttt{exe.exe} (PID 2676).
+&
+Sysmon EID 11; Sysmon EID 1; Procmon
+&
+\textit{Sysmon EID 11:} \texttt{TargetFilename: ...Temp\textbackslash p3zwhafveql.ps1 | Image: exe.exe} --- random-name \texttt{.ps1} written by a non-PowerShell process is suspicious.
+\textit{Sysmon EID 1} (on execution): \texttt{Image: powershell.exe | CommandLine: -File ...p3zwhafveql.ps1}
+\textit{Procmon:} Filter on \texttt{exe.exe} $\to$ \texttt{WriteFile} event shows full path to \texttt{.ps1}. \\
+ 
+\end{longtable}
+ 
+\vspace{1em}
+\noindent\textbf{Summary:} Every malicious behavior observed in this XWorm sample maps
+directly to at least one tool from L24. The most powerful combination is
+\textbf{Autoruns} (catching all three persistence mechanisms simultaneously) paired
+with \textbf{Sysmon} (providing full forensic provenance for each event). TCPView and
+Sysmon Event ID 3 together provide host-side attribution of the C2 beacon that
+tcpdump alone --- which sees the traffic but not the responsible process --- cannot
+supply.
+\subsection{Map to MITRE ATT\&CK}
+\textbf{Scheduled Task/Job (T1053) - Execution}
+\begin{itemize}
+	\item The malware alters scheduled tasks for recursive calls to establish persistence.
+	\item In the case of XWORM, it regersters and creates system tasks to activate background processes and establish a connection to the C2 server.
+\end{itemize}
+\textbf{Registry Run Keys/Startup Folder (T1060) - Persistence}
+\begin{itemize}
+	\item The malware add at program to the startup folder or referencing it with a Register Key therefore causing the malware to be 
+	executed whenever the user logs in.
+	\item XWORM attempted to set its autorun on the system startup.
+	\item This strategy belongs in the Persistance column.
+\end{itemize}
+\textbf{Hooking (T1179) - Privilege Escalation}
+\begin{itemize}
+	\item The malware uses Windows built-in API functions to implant code in ordinary processes to be executed across platforms to potentially
+	elevate privileges.
+	\item XWORM used this function as a sort of keylogger.
+\end{itemize}
+\textbf{Reflective Code Loading (T1620) - Stealth}
+\begin{itemize}
+	\item Malicious code is loaded directly into process memory, disguising it as it moves through the system, executing when it reaches its target.
+	\item XWORM invokes .NET assembly method \begin{verifybox} \begin{center}\texttt{api: System.Reflection.ConstructorInfo::Invoke}\end{center} \end{verifybox}
+\end{itemize}
 
 % ++++ Part04 IOC Report & Detection ++++
 \section{IOC Report \& Detection}
