@@ -12,11 +12,13 @@
 \usepackage[table]{xcolor}
 \usepackage{longtable}
 \usepackage{booktabs}
-\usepackage{hyperref}
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
 \usepackage{parskip}
 \usepackage{listings}
 \usepackage{mdframed}
 \usepackage{pifont}
+\usepackage{tikz}
+\usepackage{tikzpagenodes}
 %\usepackage{lipsum} %remove later
 \doublespacing
 %\setlength\parindent{28 pt}
@@ -184,6 +186,12 @@
 % ++++ Cover Page ++++
 
 \begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+  \draw[line width=1pt]
+    ([shift={(1in,-1in)}]current page.north west)
+    rectangle
+    ([shift={(-1in,1in)}]current page.south east);
+\end{tikzpicture}
 \centering
 \vfill
 
@@ -227,17 +235,76 @@
 \smallskip
 \begin{notebox}
 \textbf{Note about this section:}\\
-I began this lab with the Windows environment that I have been using for the entire
-semester. When running the EICAR test, I was receiving no reaction from Windows Defender.
-I attempted numerous workarounds, troubleshooting techniques and tests but Defender never 
-caught onto the code. To make sure that my eyes were not failing, I ran a comparison algoithm 
-on the test command and ask Claude to double check my input as well and it was confirmed that
-the command was correct and Defender should have flagged it. With all of these steps taken,
-I decided to begin the lab again with a fresh Windows build.
+The \texttt{Add-WindowsCapability} command for Sysmon that 
+was given did not work for this environment. Instead, I used the following:
+\begin{lstlisting}[style=terminal]
+# Download
+Invoke-WebRequest -Uri "https://download.sysinternals.com/files/Sysmon.zip" -OutFile "$env:TEMP\Sysmon.zip"
+
+# Extract
+Expand-Archive -Path "$env:TEMP\Sysmon.zip" -DestinationPath "C:\Tools\Sysmon"
+
+# Install (run this as Admin)
+C:\Tools\Sysmon\Sysmon64.exe -accepteula -i
+\end{lstlisting}
 \end{notebox}
+\bigskip
+\subsection{Creating the EICAR Test File (Sample A)}
+The following screenshots show the process of creating the EICAR test
+file in the Windows VM. I used the full sting given hoping to see 
+Defender defy my expectations and catch the file at creation, but the 
+file survived create and \texttt{Get-Content}
+\smallskip
+\begin{center}
+	\includegraphics[width=0.75\textwidth]{images/1.1-eicarcreated.png}\\ 
+	\textit{Figure 1.1: Creation of the EICAR test file}
+\end{center}
+\smallskip
+\begin{center}
+	\includegraphics[width=0.75\textwidth]{images/1.2-nodefender.png}\\ 
+	\textit{Figure 1.2: The EICAR test file survives Windows Defender}
+\end{center}
+\smallskip
+\subsection{Basic File Identification}
+\includegraphics[width=\textwidth]{images/1.3-fileidentification.png}\\ 
+\textit{Figure 1.3: Results of file identification commands for the EICAR test file}
+\smallskip
+\subsection{Hash Lookup on Virus Total}
+\begin{itemize}
+	\item Out of  62 security vendors on Virus Total, 6 flagged the file as malicious.
+	\item A few names given for the threat are:
+	\begin{itemize}
+		\item \texttt{Virus/EICAR\underbar{   }Test\underbar{   }File}
+		\item \texttt{NotAThreat.EICAR[TestFile]}
+		\item \texttt{Eicar\underbar{   }test\underbar{   }1}
+	\end{itemize}
+	\item Tags shown for the 'threat' are:
+	\begin{itemize}
+		\item powershell
+		\item idle
+		\item long-sleeps
+	\end{itemize}
+	\item File type according to Virus Total: \textbf{Powershell}
+	\item As for the community tab, there isn't any activity early then 10 years.
+\end{itemize}
+\smallskip
+\includegraphics[width=\textwidth]{images/1.4-virustotaldock.png}\\
+\textit{Figure 1.4: Results for Virus Total hash look-up}
+\bigskip
+\begin{notebox}
+	It should be noted that while the results on Virus Total showed a 6/62, the only 
+	results to show in the 'Security vendors' analysis' table were those from AhnLab-V3, 
+	SUPERAntiSpyware, and TrendMicro-HouseCall.
+\end{notebox}
+\bigskip
+\textbf{What kind of threat is this?}\\
+This is an idle \textbf{Powershell script} that waits until the right conditions are met before
+executing. This would explain how it was able to evade detection from Windows Defender 
+despite being flagged as malicious.
 
 % ++++ Part02 Static Analysis ++++
 \section{Static Analysis}
+
 
 % ++++ Part03 Dynamic Analysis ++++
 \section{Dynamic Analysis}
@@ -257,52 +324,132 @@ I decided to begin the lab again with a fresh Windows build.
 %\end{lstlisting}
 
 
-% +++ Fixed width table +++
-%\begin{tabularx}{1.0\textwidth}{
-%	|| >{\raggedright\arraybackslash}X
-%	|  >{\raggedright\arraybackslash}X
-%	|  >{\raggedright\arraybackslash}X
-%	|  >{\raggedright\arraybackslash}X || }
-%	\hline
-%	\textbf{x} & \textbf{x} & \textbf{x} & \textbf{x} \\
-%	\hline \hline
-%	x $ x $ x & x & x & x  \\
-%	\hline
-%	x $ x $ x & x & x & x \\
-%	\hline
-%	x $ x $ x & x & x & x \\
-%	\hline
-%	x $ x $ x & x &  x  & x \\
-%	\hline
-%\end{tabularx}
+% +++++++++ Helpful stuff +++++++++++
+%
+% +++ Using Minipages +++
+% \begin{minipage}[t]{\linewidth}
+% \includegraphics[width=0.50\textwidth]{*Image file}\\
+% \textit{*Image subtitle}
+% \end{minipage}
+% \end{enumerate}
 %
 
-% +++ For tables that take multiple pages +++
-%{\singlespacing
-%	\begin{longtable}{
-% 		|| >{\centering\arraybackslash}p{\colNum}
-%  		| >{\raggedright\arraybackslash}p{\colSmall}
-%  		| >{\raggedright\arraybackslash}p{\colSmall}
-%  		| >{\raggedright\arraybackslash}p{\colBig}
-%  		| >{\raggedright\arraybackslash}p{\colSmall} ||}
-%		\hline
-%		\textbf{x} & \textbf{x} & \textbf{x} & \textbf{x} & \textbf{x} \\
-%		\hline\hline
-%		\endhead
-%		\hline
-%  	    	 x & x & x & x  & x \\
-%		\hline
-%	\end{longtable}
-%}
+% ++++++++ Non Ticked Lists (terminal style) ++++++++++++
+%\begin{lstlisting}[style=terminal]
+%# Flush all existing rules
+%iptables -F
+%iptables -X
+%iptables -t nat -F
+%iptables -t nat -X
+%\end{lstlisting}
 
+%# Set default DROP on INPUT and FORWARD; OUTPUT remains ACCEPT
+%iptables -P INPUT DROP
+%iptables -P FORWARD DROP
+%iptables -P OUTPUT ACCEPT
+%\end{lstlisting}
 
+% +++++++ Example for Using Boxes(Defined at top) +++++++++++++
+%\begin{warnbox}
+%\textbf{Warning:} After setting INPUT to DROP, new SSH sessions from untrusted
+%interfaces will be blocked immediately. Ensure you are connected via eth0
+%(management side) before proceeding, or have console access as a fallback.
+%\end{warnbox}
 
-
-
-
-
-
-
-
-
-
+% +++  Longtable exa,mple (with color) +++
+%\noindent
+%\begin{longtable}{>{\bfseries}p{0.8cm} p{2.0cm} p{5.2cm} p{1.3cm} p{1.5cm} p{2.4cm}}
+%  \rowcolor{headercol}
+%  \hcell{ID} & \hcell{Severity} & \hcell{Finding} &
+%  \hcell{CVSS} & \hcell{Composite} & \hcell{System(s)} \\
+%  \endfirsthead
+%  \rowcolor{headercol}
+%  \hcell{ID} & \hcell{Severity} & \hcell{Finding} &
+%  \hcell{CVSS} & \hcell{Composite} & \hcell{System(s)} \\
+%  \endhead
+%  \midrule
+%  \hline
+%  F1 &
+%  \sevbadge{medcol}{MEDIUM} &
+%  Anonymous FTP login --- confidential directory exposed &
+%  \cellcolor{lightyellow}6.4 &
+%  \cellcolor{lightred}\textbf{5.00} &
+%  Ubuntu (.102) \\[4pt]
+% \hline
+%  F2 &
+%  \sevbadge{medcol}{MEDIUM} &
+%  Cleartext HTTP credential transmission &
+%  \cellcolor{lightyellow}4.8 &
+%  \cellcolor{lightred}\textbf{4.45} &
+%  Ubuntu (.102) \\[4pt]
+% \hline
+%  F3 &
+%  \sevbadge{medcol}{MEDIUM} &
+%  FTP authenticated sessions over cleartext &
+%  \cellcolor{lightyellow}4.8 &
+%  3.95 &
+%  Ubuntu (.102) \\[4pt]
+% \hline
+%  FW1 &
+%  \sevbadge{highcol}{HIGH{*}} &
+%  Firewall default ACCEPT policy on all chains &
+% \cellcolor{lightgray}N/A &
+%  \cellcolor{lightgray}N/A &
+%  Router (.106) \\[4pt]
+% \hline
+%  FW2 &
+%  \sevbadge{highcol}{HIGH{*}} &
+%  Unrestricted inter-zone forwarding (all ports/protocols) &
+%  \cellcolor{lightgray}N/A &
+%  \cellcolor{lightgray}N/A &
+%  Router (.106) \\[4pt]
+% \hline
+%  FW3 &
+%  \sevbadge{medcol}{MEDIUM} &
+%  No stateful inspection --- no established/related tracking &
+%  \cellcolor{lightgray}N/A &
+%  \cellcolor{lightgray}N/A &
+%  Router (.106) \\[4pt]
+% \hline
+%  FW4 &
+%  \sevbadge{medcol}{MEDIUM} &
+%  Management services (SSH, Webmin) exposed on all interfaces &
+%  \cellcolor{lightgray}N/A &
+%  \cellcolor{lightgray}N/A &
+%  Router (.106) \\[4pt]
+% \hline
+%  F4 &
+%  \sevbadge{medcol}{MEDIUM} &
+%  Deprecated TLS 1.0/1.1 on RDP service &
+%  \cellcolor{lightyellow}4.3 &
+% 3.75 &
+%  Windows (.105) \\[4pt]
+% \hline
+%  F5 &
+%  \sevbadge{medcol}{MEDIUM} &
+%  DCE/RPC endpoint enumeration --- internal service map exposed &
+%  \cellcolor{lightyellow}5.0 &
+%  3.45 &
+%  Windows (.105) \\[4pt]
+% \hline
+%  F6 &
+%  \sevbadge{lowcol}{LOW} &
+%  Weak SSH MAC algorithms (umac-64) on both servers &
+%  \cellcolor{lightgreen}2.6 &
+%  2.50 &
+% \hline
+%  F7 &
+%  \sevbadge{lowcol}{LOW} &
+%  TCP timestamp information disclosure &
+%  \cellcolor{lightgreen}2.6 &
+%  1.95 &
+%  Ubuntu, Windows \\[4pt]
+% \hline
+%  F8 &
+%  \sevbadge{lowcol}{LOW} &
+%  ICMP timestamp reply enabled &
+%  \cellcolor{lightgreen}2.1 &
+%  1.95 &
+%  Ubuntu (.102) \\[4pt]
+%  \bottomrule
+%\end{longtable}
