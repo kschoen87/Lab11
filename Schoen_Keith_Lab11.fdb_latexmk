@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1777623767.01764 "c:/Users/kasch/OneDrive/Desktop/Spring26/Defense/Lab11/Schoen_Keith_Lab11.tex" "Schoen_Keith_Lab11.pdf" "Schoen_Keith_Lab11" 1777623769.24897 0
+["pdflatex"] 1777653530.18116 "c:/Users/kasch/OneDrive/Desktop/Spring26/Defense/Lab11/Schoen_Keith_Lab11.tex" "Schoen_Keith_Lab11.pdf" "Schoen_Keith_Lab11" 1777653532.4696 0
   "C:/Users/kasch/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1777604004 82507 a9eef8696c92627b87e9975edea03b2a ""
   "C:/Users/kasch/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm0700.pk" 1777621815 8268 daca1e5af1444d4a2eada3cedc50b9a7 ""
   "C:/Users/kasch/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1775717912 11548 b1b20e3b242f1e1ed1399ecaea6f5b2a ""
@@ -178,6 +178,7 @@
   "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/psnfss/pifont.sty" 1585926771 2350 62e73848f29fd8cd37fb7974c7cf2221 ""
   "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/psnfss/upsy.fd" 1585253778 153 2da0acd77cba348f34823f44cabf0058 ""
   "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/psnfss/upzd.fd" 1585253778 153 b2a94082cb802f90d3daf6dd0c7188a0 ""
+  "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/ragged2e/ragged2e.sty" 1687525147 10085 3dececaeed388e31285c366e124c0c4e ""
   "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refcount.sty" 1576433952 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1751104012 9684 a33a14b82ce60d6e77cb9be689d79ee6 ""
   "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/setspace/setspace.sty" 1670403145 22490 8cac309b79a4c53a4ffce4b1b07aead0 ""
@@ -189,11 +190,11 @@
   "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-abspage.sty" 1773584792 2269 91cd03da61ab1da00145ba8a81560051 ""
   "C:/Users/kasch/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-base.sty" 1773584792 20785 8db5f0a2b2ce96dda9fac87ccab29449 ""
-  "Schoen_Keith_Lab11.aux" 1777623769 2947 1236291d1ffe6182da88ef488d5f4e6a "pdflatex"
-  "Schoen_Keith_Lab11.out" 1777623769 3762 64e88ab2d434c32cd384e3cf0e769d08 "pdflatex"
-  "Schoen_Keith_Lab11.tex" 1777623766 29283 d90bb8f4c58b129d724b1d45a56b2662 ""
-  "Schoen_Keith_Lab11.toc" 1777623769 1762 0d25f003594a5e2a7e2a1dc9268a7f70 "pdflatex"
-  "c:/Users/kasch/OneDrive/Desktop/Spring26/Defense/Lab11/Schoen_Keith_Lab11.tex" 1777623766 29283 d90bb8f4c58b129d724b1d45a56b2662 ""
+  "Schoen_Keith_Lab11.aux" 1777653532 3534 547966200bc47dc8ac4e2a9c0db5646f "pdflatex"
+  "Schoen_Keith_Lab11.out" 1777653532 4124 cee0bb1ef21b057296f14f65f874c30c "pdflatex"
+  "Schoen_Keith_Lab11.tex" 1777653531 36909 3b0d61a66c801e5464eaa6f23896716b ""
+  "Schoen_Keith_Lab11.toc" 1777653532 1941 c09998aea91746f291696e279071f969 "pdflatex"
+  "c:/Users/kasch/OneDrive/Desktop/Spring26/Defense/Lab11/Schoen_Keith_Lab11.tex" 1777653531 36909 3b0d61a66c801e5464eaa6f23896716b ""
   "images/1.1-eicarcreated.png" 1777598208 80304 73b5243dc04e33186ac45bc76533b894 ""
   "images/1.2-nodefender.png" 1777599294 122842 709aa89d2b704fecee38c0cc9795ab98 ""
   "images/1.3-fileidentification.png" 1777600224 247835 127c116ad5fc8c555d14a3a25e41384a ""

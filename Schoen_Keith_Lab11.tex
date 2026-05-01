@@ -19,6 +19,8 @@
 \usepackage{pifont}
 \usepackage{tikz}
 \usepackage{tikzpagenodes}
+\usepackage{ragged2e}
+\usepackage{url}
 %\usepackage{lipsum} %remove later
 \doublespacing
 %\setlength\parindent{28 pt}
@@ -230,7 +232,17 @@
 
 % ++++ Executive Summary ++++
 \section{Executive Summary}
-
+During a routine security exercise, our team identified and analyzed a piece 
+of malicious software known as XWorm — a remote-access tool that, if installed 
+on a computer, could give an outside attacker hidden control over that machine, 
+including the ability to view files, monitor activity, and communicate with other 
+systems on the network. Like many modern threats, it is designed to blend in and 
+avoid detection, which makes awareness and proactive monitoring more important 
+than reactive response. The good news is that no MedTech systems have been confirmed as 
+affected, and because we have thoroughly documented how this software behaves, we are 
+well-positioned to detect and respond to it quickly should it appear in our environment. 
+As a precaution, we recommend the straightforward detection steps outlined in this report 
+be reviewed by the IT team at their earliest convenience.
 % ++++ Part01 Triage & File Identification
 \section{Triage \& File Identification}
 \smallskip
@@ -623,6 +635,178 @@ supply.
 
 % ++++ Part04 IOC Report & Detection ++++
 \section{IOC Report \& Detection}
+\subsection{IOC List for XWORM} 
+\begin{longtable}{p{2.8cm} p{6.8cm} p{5.0cm}}
+\caption{XWorm Indicators of Compromise (Sample B)} \label{tab:ioc} \\
+\toprule
+\textbf{IOC Type} & \textbf{Value} & \textbf{Context} \\
+\midrule
+\endfirsthead
+ 
+\multicolumn{3}{c}{\tablename\ \thetable{} (continued)} \\
+\toprule
+\textbf{IOC Type} & \textbf{Value} & \textbf{Context} \\
+\midrule
+\endhead
+ 
+\bottomrule
+\endfoot
+ 
+\bottomrule
+\endlastfoot
+ 
+%% ── File Hashes ────────────────────────────────────────────────────────────
+File Hash (SHA256)
+  & \texttt{\small 939b247d1cf5a8b674ff632365af9982} \newline
+    \texttt{\small 256363d6ae390876d0d3d9cbc07d163b}
+  & Primary XWorm payload (\texttt{exe.exe} / \texttt{system32.exe}).
+    Flagged 39\,/\,71 on VirusTotal.
+    Compilation timestamp 2026-04-30 06:12:58 UTC. \\
+\addlinespace
+ 
+File Hash (SHA256)
+  & \texttt{\small 48e14832bdea59761ec7d0603b6856b9} \newline
+    \texttt{\small 96a7aaa8919e7c9a47afa9167270b00f}
+  & PowerShell staging script \texttt{p3zwhafveql.ps1}
+    dropped to \texttt{AppData\textbackslash Local\textbackslash Temp}
+    by PID 2676 during initial execution. \\
+\addlinespace
+ 
+File Hash (SHA256)
+  & \texttt{\small d5d40f9ad3269bdb06c9b49042dec583} \newline
+    \texttt{\small 66286bbfb8755b8ecff743b663dd74aa}
+  & Startup-folder shortcut \texttt{ivrbDjKYgQZkne.lnk}
+    dropped for persistence; randomised filename is
+    a strong behavioural signal. \\
+\addlinespace
+ 
+File Hash (MD5)
+  & \texttt{\small 7acb14fbd7070725d8dc30ec7974b648}
+  & MD5 of the primary payload (both \texttt{exe.exe}
+    and its copy \texttt{ivrbDjKYgQZkne.exe} share
+    this hash — identical binaries). \\
+\addlinespace
+ 
+File Hash (MD5)
+  & \texttt{\small 04b4806a94a4dd06c9b772739ea01e32}
+  & MD5 of the PowerShell staging script
+    \texttt{p3zwhafveql.ps1}. \\
+\addlinespace
+ 
+%% ── Network IOCs ───────────────────────────────────────────────────────────
+IP Address
+  & \texttt{158.94.211.33:7017}
+  & Confirmed XWorm C2 server (OMEGATECH-AS / AS214943
+    RAILNET, CN: SC). Multiple Suricata alerts:
+    \textit{MALWARE [ANY.RUN] XWorm TCP packet outbound}.
+    Initiated by \texttt{exe.exe} PID 6856. \\
+\addlinespace
+ 
+IP Address
+  & \texttt{199.232.210.172:80}
+  & Secondary outbound TCP connection observed during
+    static analysis (VirusTotal behaviour tab).
+    Not whitelisted; warrants investigation. \\
+\addlinespace
+ 
+IP Address
+  & \texttt{8.8.8.8:53} (UDP)
+  & DNS connectivity probe sent immediately before C2
+    contact — used to verify internet access.
+    Attribute to \texttt{exe.exe} via Sysmon EID 3. \\
+\addlinespace
+ 
+Domain
+  & \texttt{N/A} (direct-IP C2)
+  & XWorm contacted \texttt{158.94.211.33} without a
+    DNS lookup, consistent with hardcoded C2 IP.
+    No resolvable domain associated with the C2 at
+    time of analysis. \\
+\addlinespace
+ 
+%% ── File Paths ─────────────────────────────────────────────────────────────
+File Path
+  & \scriptsize{\texttt{C:\textbackslash Users\textbackslash
+    <USER>\textbackslash AppData\textbackslash
+    Local\textbackslash Temp\textbackslash exe.exe}}
+  & Initial payload execution path (PID 2676, 6856).
+    Execution from \texttt{\%TEMP\%} by a non-system
+    parent (\texttt{explorer.exe}) is a high-confidence
+    red flag. \\
+\addlinespace
+ 
+File Path
+  & \scriptsize{\texttt{C:\textbackslash Users\textbackslash
+    <USER>\textbackslash AppData\textbackslash
+    Roaming\textbackslash system32.exe}}
+  & Persistent payload copy masquerading as a Windows
+    system binary. Legitimate \texttt{system32.exe}
+    does not reside in \texttt{AppData\textbackslash Roaming}. \\
+\addlinespace
+ 
+File Path
+  & \scriptsize{\texttt{C:\textbackslash Users\textbackslash
+    <USER>\textbackslash AppData\textbackslash
+    Roaming\textbackslash ivrbDjKYgQZkne.exe}}
+  & Second persistent payload copy using a randomised
+    filename. Identical SHA256 to the primary payload. \\
+\addlinespace
+ 
+File Path
+  & \scriptsize{\texttt{...\textbackslash Startup\textbackslash
+    system32.lnk} \newline
+    \texttt{...\textbackslash Startup\textbackslash
+    ivrbDjKYgQZkne.lnk}}
+  & Shortcut files dropped to
+    \texttt{Microsoft\textbackslash Windows\textbackslash
+    Start Menu\textbackslash Programs\textbackslash Startup}
+    to ensure execution on every user login. \\
+\addlinespace
+ 
+File Path
+  & \scriptsize{\texttt{C:\textbackslash Users\textbackslash
+    <USER>\textbackslash AppData\textbackslash
+    Local\textbackslash Temp\textbackslash
+    p3zwhafveql.ps1}}
+  & Random-name PowerShell staging script written by
+    \texttt{exe.exe} (not by PowerShell itself) — a
+    strong indicator of script-based payload delivery. \\
+\addlinespace
+ 
+%% ── Registry Keys ──────────────────────────────────────────────────────────
+Registry Key
+  & \texttt{\scriptsize HKCU\textbackslash SOFTWARE\textbackslash
+    Microsoft\textbackslash Windows\textbackslash
+    CurrentVersion\textbackslash Run} \newline
+    \textbf{Name:} \texttt{system32} \newline
+    \textbf{Value:}
+    \texttt{...\textbackslash Roaming\textbackslash
+    system32.exe}
+  & Run-key persistence written by \texttt{exe.exe}
+    PID 6856. Entry survives reboot and re-executes
+    the payload on every user login.
+    Sysmon EID 13 will log the write event. \\
+\addlinespace
+ 
+Registry Key
+  & \texttt{\scriptsize HKCU\textbackslash SOFTWARE\textbackslash
+    Microsoft\textbackslash Windows\textbackslash
+    CurrentVersion\textbackslash Explorer\textbackslash
+    FileExts} (OpenWithProgIds)
+  & Opened by \texttt{exe.exe} during execution;
+    consistent with file-association enumeration or
+    preparation for filetype-based execution hijacking. \\
+ 
+\end{longtable}
+\subsection{Rule for Detection of XWORM}
+Run the following is a simple PowerShell script as Administrator with Sysmon installed:
+\begin{lstlisting}[style=terminal]
+	# Basic - last 24 hours
+	.\Detect-XWorm.ps1
+
+	# Extend window and export results for incident response
+	.\Detect-XWorm.ps1 -Hours 72 -ExportCsv C:\IR\xworm_hits.csv
+\end{lstlisting}
 
 \vfill
 \textit{++report written and formatted with help from Claude (Sonnet 4.6)++}

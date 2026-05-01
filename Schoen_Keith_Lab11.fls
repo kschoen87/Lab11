@@ -264,6 +264,8 @@ INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\tex\latex\tikzpagenodes\tikzp
 INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\tex\latex\tikzpagenodes\tikzpagenodes.sty
 INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\tex\latex\ifoddpage\ifoddpage.sty
 INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\tex\latex\ifoddpage\ifoddpage.sty
+INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\tex\latex\ragged2e\ragged2e.sty
+INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\tex\latex\ragged2e\ragged2e.sty
 INPUT .\Schoen_Keith_Lab11.aux
 INPUT .\Schoen_Keith_Lab11.aux
 INPUT Schoen_Keith_Lab11.aux
@@ -350,7 +352,6 @@ INPUT .\images\1.4-virustotaldock.png
 INPUT .\images\1.4-virustotaldock.png
 INPUT .\images\1.4-virustotaldock.png
 INPUT .\images\1.4-virustotaldock.png
-INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr9.tfm
 INPUT .\images\2.1-stringsoutput.png
 INPUT .\images\2.1-stringsoutput.png
 INPUT .\images\2.1-stringsoutput.png
@@ -427,6 +428,7 @@ INPUT .\images\2.10-relationsother.png
 INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmtt8.tfm
 INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx7.tfm
 INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm0700.tfm
+INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr9.tfm
 INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
 INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi9.tfm
 INPUT C:\Users\kasch\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
