@@ -304,7 +304,110 @@ despite being flagged as malicious.
 
 % ++++ Part02 Static Analysis ++++
 \section{Static Analysis}
+\subsection{String Analysis with Sysinternals Strings}
+Executed the following commands on the EICAR test file from section one to demonstrate 
+how it works at a basic level:\\
+\begin{lstlisting}[style=terminal]
+	# Extract all strings at least 8 characters long and save to file
+	strings.exe -n 8 .\eicar_test.com > eicar_strings.txt
 
+	# Open the output and examine it
+	notepad eicar_strings.txt
+\end{lstlisting}
+\bigskip
+\includegraphics[width=\textwidth]{images/2.1-stringsoutput.png}\\
+\textit{Figure 2.1: Strings output for the EICAR test file}
+\subsection{Examine PE Structure via VirusTotal's Details Tab}
+\bigskip
+\includegraphics[width=\textwidth]{images/2.2-vtdetailseicar.png}\\
+\textit{Figure2.2: Details section for EICAR test file hash lookup}
+\subsection{Choose a Real Malware Sample (Sample B)}
+\bigskip
+\begin{warnbox}
+\textbf{Note about malware selection for Sample B}\\
+\textbf{SHA256 Hash:}939b247d1cf5a8b674ff632365af9982256363d6ae390876d0d3d9cbc07d163b\\
+\textbf{Malware Family:} phantomstealer\\
+\textbf{First submission to VT:} 2026-04-30 07:14:26 UTC\\
+\textbf{VT Report URL:}\\
+	https://www.virustotal.com/gui/file/939b247d1cf5a8b674ff632365af9982256363d6ae3908\\ 76d0d3d9cbc07d163b/summary\\
+\textbf{Hybrid Analysis Report URL:}\\
+	https://hybrid-analysis.com/sample/939b247d1cf5a8b674ff632365af9982256363d6ae39087\\ 6d0d3d9cbc07d163b/69f301586d9a87d56d06d3b7\\
+\ \\
+Honestly, I decided on a RAT because I like the animal and the malware category. When I did
+quick overview, this one had tons of documentation making it an easy first grab. Along with
+the amount of information already becoming available, it is made extra exciting in that this is
+brand-new submission to VT (about 3 hours old). It's a great pick for Sample B.	
+\end{warnbox}
+\subsubsection{Exploring Sample B's Virus Total Page}
+\textbf{Detection Tab}
+\begin{itemize}
+	\item \textbf{Detection Ratio:} 39/71
+	\item This maleware is new so there isn't a name yet, but common themes include RAT, MSIL, 
+	and Trojan. Skyhigh(SWG) seems to be the only AV that has given it a name so far: "Artemis!Trojan".
+	The 'popular threat label' is \underbar{trojan.msil/phantomstealer}.
+	\item \textbf{Family:} phantomstealer
+\end{itemize}
+\textbf{Details Tab}
+\begin{itemize}
+	\item \textbf{File type and size:} Win32 EXE / 876.50 KB (897536 bytes)
+	\item \textbf{First Submission:} 2026-04-30 07:14:26 UTC
+	\item \textbf{PE Header Information:}
+	\begin{itemize}
+		\item \underbar{Target Machine:} Intel 386 or later processors and compatible processors
+		\item \underbar{Compilation Timestamp:} 2026-04-30 06:12:58 UTC
+		\item \underbar{Entry Point:} 902118
+		\item \underbar{Contained Sections:} 3
+	\end{itemize} 
+	\item \textbf{Imports:}
+	\begin{itemize}
+		\item mscoree.dll
+		\begin{itemize}
+			\item \underbar{   }CorExeMain
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+\textbf{Behavior Tab}
+\begin{itemize}
+	\item \textbf{Sandboxes:}
+	\begin{itemize}
+		\item CAPA
+		\item VirusTotal Observer
+	\end{itemize}
+	\item \textbf{Process Tree:}\\
+		840 - 939b247d1cf5a8b674ff632365af9982256363d6ae390876d0d3d9cbc07d163b.exe\\
+ 		276 - C:\textbackslash Windows\textbackslash System32\textbackslash WindowsPowerShell\textbackslash v1.0\textbackslash powershell.exe Add-MpPreference -ExclusionPath C:\textbackslash Users\textbackslash <USER>\textbackslash Downloads\textbackslash 939b247d1cf5a8b674ff632365af9982256363d\\ 6ae390876d0d3d9cbc07d163b.exe\\
+		2124 - ead8bccff0d208d26935d05c0ec80515.bat\\
+		2932 - ead8bccff0d208d26935d05c0ec80515.bat\\
+ 		2968 - 0906e49c252cde958db247fef205b1bb.exe\\
+		892 - cde09bcdf5fde1e2eac52c0f93362b79.exe\\
+		2860 - 0e058c51d287f1a00f674d8fefdf1e35.exe\\
+	\item \textbf{File System Actions:}\\
+	\includegraphics[width=0.75\textwidth]{images/2.3-vtdetails1.png}\\ \includegraphics[width=0.75\textwidth]{images/2.4-vtdetails2.png}\\ \includegraphics[width=0.75\textwidth]{images/2.5-vtdetails3.png}\\
+	\textit{Figures 2.3-.5: Details of Malware file operations}
+	\item \textbf{Registry Actions:}\\
+	\includegraphics[width=0.75\textwidth]{images/2.6-vtdetails4.png}\\
+	\textit{Figure 2.6: Details of Malware registry actions}
+	\item \textbf{Network Communications}
+	\begin{itemize}
+		\item IP Traffic
+		\begin{itemize}
+			\item UDP 8.8.8.8:53
+			\item TCP 199.232.210.172:80
+		\end{itemize}
+	\end{itemize}
+	\item \textbf{MITRE ATT\&CK Techniques:}\\
+	\includegraphics[width=0.75\textwidth]{images/2.7-mitretechniques.png}\\
+	\textit{Figure 2.7: Table of MITRE ATT\&CK techniques used}
+\end{itemize}
+\textbf{Relations Tab}
+\begin{itemize}
+	\item \textbf{Contacted IPs:}\\
+	\includegraphics[width=0.75\textwidth]{images/2.8-relationsips.png}
+	\item \textbf{Dropped Files:}\\
+	\includegraphics[width=0.75\textwidth]{images/2.9-relationsdrops.png}
+	\item \textbf{Related Samples:}\\
+	\includegraphics[width=0.75\textwidth]{images/2.10-relationsother.png}
+\end{itemize}
 
 % ++++ Part03 Dynamic Analysis ++++
 \section{Dynamic Analysis}

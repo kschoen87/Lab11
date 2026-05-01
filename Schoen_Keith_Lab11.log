@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.13)  30 APR 2026 21:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.13)  30 APR 2026 23:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -870,7 +870,7 @@ Package hyperref Info: Link coloring ON on input line 184.
 \openout4 = `Schoen_Keith_Lab11.out'.
 
 \c@lstlisting=\count367
-<images/logo.png, id=38, 1121.28pt x 1121.28pt>
+<images/logo.png, id=54, 1121.28pt x 1121.28pt>
 File: images/logo.png Graphic file (type png)
 <use images/logo.png>
 Package pdftex.def Info: images/logo.png  used on input line 199.
@@ -890,12 +890,12 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \openout5 = `Schoen_Keith_Lab11.toc'.
 
  [1]
-<images/1.1-eicarcreated.png, id=61, 803.62735pt x 146.04562pt>
+<images/1.1-eicarcreated.png, id=81, 803.62735pt x 146.04562pt>
 File: images/1.1-eicarcreated.png Graphic file (type png)
 <use images/1.1-eicarcreated.png>
 Package pdftex.def Info: images/1.1-eicarcreated.png  used on input line 259.
 (pdftex.def)             Requested size: 352.31625pt x 64.02626pt.
-<images/1.2-nodefender.png, id=62, 803.25093pt x 86.19704pt>
+<images/1.2-nodefender.png, id=82, 803.25093pt x 86.19704pt>
 File: images/1.2-nodefender.png Graphic file (type png)
 <use images/1.2-nodefender.png>
 Package pdftex.def Info: images/1.2-nodefender.png  used on input line 264.
@@ -916,7 +916,7 @@ l.265 ...ICAR test file survives Windows Defender}
                                                    [1
 
  <./images/1.1-eicarcreated.png>]
-<images/1.3-fileidentification.png, id=80, 802.87453pt x 333.11954pt>
+<images/1.3-fileidentification.png, id=100, 802.87453pt x 333.11954pt>
 File: images/1.3-fileidentification.png Graphic file (type png)
 <use images/1.3-fileidentification.png>
 Package pdftex.def Info: images/1.3-fileidentification.png  used on input line 269.
@@ -930,11 +930,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [2 <./images/1.2-nodefender.png> <./images/1.3-fileidentification.png>]
-<images/1.4-virustotaldock.png, id=88, 854.44218pt x 512.66531pt>
+<images/1.4-virustotaldock.png, id=108, 854.44218pt x 512.66531pt>
 File: images/1.4-virustotaldock.png Graphic file (type png)
 <use images/1.4-virustotaldock.png>
 Package pdftex.def Info: images/1.4-virustotaldock.png  used on input line 291.
 (pdftex.def)             Requested size: 469.75502pt x 281.84944pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 308--310
+
+ []
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -944,6 +948,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
 [3 <./images/1.4-virustotaldock.png>]
+<images/2.1-stringsoutput.png, id=114, 631.9861pt x 405.38953pt>
+File: images/2.1-stringsoutput.png Graphic file (type png)
+<use images/2.1-stringsoutput.png>
+Package pdftex.def Info: images/2.1-stringsoutput.png  used on input line 318.
+(pdftex.def)             Requested size: 469.75502pt x 301.33205pt.
+<images/2.2-vtdetailseicar.png, id=115, 854.44218pt x 513.79453pt>
+File: images/2.2-vtdetailseicar.png Graphic file (type png)
+<use images/2.2-vtdetailseicar.png>
+Package pdftex.def Info: images/2.2-vtdetailseicar.png  used on input line 322.
+(pdftex.def)             Requested size: 469.75502pt x 282.47026pt.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.49998pt, for example:
@@ -951,26 +966,148 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-[4] (Schoen_Keith_Lab11.aux)
+[4 <./images/2.1-stringsoutput.png>]
+Overfull \hbox (4.612pt too wide) in paragraph at lines 327--340
+\OT1/cmr/bx/n/12 SHA256 Hash:\OT1/cmr/m/n/12 939b247d1cf5a8b674ff632365af9982256363d6ae390876d0d3d9cbc07d163b 
+ []
+
+
+Overfull \hbox (2.77776pt too wide) in paragraph at lines 327--340
+\OT1/cmr/m/n/12 https://www.virustotal.com/gui/file/939b247d1cf5a8b674ff632365af9982256363d6ae3908 
+ []
+
+
+Overfull \hbox (6.82494pt too wide) in paragraph at lines 327--340
+\OT1/cmr/m/n/12 https://hybrid-analysis.com/sample/939b247d1cf5a8b674ff632365af9982256363d6ae39087 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 327--340
+
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[5 <./images/2.2-vtdetailseicar.png>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[6]
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 378.
+ (C:\Users\kasch\AppData\Local\Programs\MiKTeX\tex/latex/base\omscmr.fd
+File: omscmr.fd 2024/11/19 v2.5n Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 378.
+
+Overfull \hbox (20.36252pt too wide) in paragraph at lines 376--384
+\OT1/cmr/m/n/12 276 - C:\OMS/cmsy/m/n/12 n\OT1/cmr/m/n/12 Windows\OMS/cmsy/m/n/12 n\OT1/cmr/m/n/12 System32\OMS/cmsy/m/n/12 n\OT1/cmr/m/n/12 WindowsPowerShell\OMS/cmsy/m/n/12 n\OT1/cmr/m/n/12 v1.0\OMS/cmsy/m/n/12 n\OT1/cmr/m/n/12 powershell.exe Add-MpPreference
+ []
+
+
+Overfull \hbox (22.03467pt too wide) in paragraph at lines 376--384
+\OT1/cmr/m/n/12 -ExclusionPath C:\OMS/cmsy/m/n/12 n\OT1/cmr/m/n/12 Users\OMS/cmsy/m/n/12 n\OT1/cmr/m/n/12 <USER>\OMS/cmsy/m/n/12 n\OT1/cmr/m/n/12 Downloads\OMS/cmsy/m/n/12 n\OT1/cmr/m/n/12 939b247d1cf5a8b674ff632365af9982256363d 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 376--384
+
+ []
+
+<images/2.3-vtdetails1.png, id=137, 939.88641pt x 219.06844pt>
+File: images/2.3-vtdetails1.png Graphic file (type png)
+<use images/2.3-vtdetails1.png>
+Package pdftex.def Info: images/2.3-vtdetails1.png  used on input line 385.
+(pdftex.def)             Requested size: 352.31625pt x 82.11702pt.
+<images/2.4-vtdetails2.png, id=138, 915.0436pt x 414.42328pt>
+File: images/2.4-vtdetails2.png Graphic file (type png)
+<use images/2.4-vtdetails2.png>
+Package pdftex.def Info: images/2.4-vtdetails2.png  used on input line 385.
+(pdftex.def)             Requested size: 352.31625pt x 159.56293pt.
+<images/2.5-vtdetails3.png, id=139, 946.28531pt x 211.54031pt>
+File: images/2.5-vtdetails3.png Graphic file (type png)
+<use images/2.5-vtdetails3.png>
+Package pdftex.def Info: images/2.5-vtdetails3.png  used on input line 385.
+(pdftex.def)             Requested size: 352.31625pt x 78.75931pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[7 <./images/2.3-vtdetails1.png>]
+<images/2.6-vtdetails4.png, id=146, 935.74594pt x 379.4175pt>
+File: images/2.6-vtdetails4.png Graphic file (type png)
+<use images/2.6-vtdetails4.png>
+Package pdftex.def Info: images/2.6-vtdetails4.png  used on input line 388.
+(pdftex.def)             Requested size: 352.31625pt x 142.85435pt.
+<images/2.7-mitretechniques.png, id=147, 995.59453pt x 417.05812pt>
+File: images/2.7-mitretechniques.png Graphic file (type png)
+<use images/2.7-mitretechniques.png>
+Package pdftex.def Info: images/2.7-mitretechniques.png  used on input line 399.
+(pdftex.def)             Requested size: 352.31625pt x 147.58893pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[8 <./images/2.4-vtdetails2.png> <./images/2.5-vtdetails3.png> <./images/2.6-vtdetails4.png>]
+<images/2.8-relationsips.png, id=155, 951.555pt x 63.23625pt>
+File: images/2.8-relationsips.png Graphic file (type png)
+<use images/2.8-relationsips.png>
+Package pdftex.def Info: images/2.8-relationsips.png  used on input line 405.
+(pdftex.def)             Requested size: 352.31625pt x 23.41344pt.
+<images/2.9-relationsdrops.png, id=156, 958.70673pt x 247.67531pt>
+File: images/2.9-relationsdrops.png Graphic file (type png)
+<use images/2.9-relationsdrops.png>
+Package pdftex.def Info: images/2.9-relationsdrops.png  used on input line 407.
+(pdftex.def)             Requested size: 352.31625pt x 91.01863pt.
+<images/2.10-relationsother.png, id=157, 960.58875pt x 251.43938pt>
+File: images/2.10-relationsother.png Graphic file (type png)
+<use images/2.10-relationsother.png>
+Package pdftex.def Info: images/2.10-relationsother.png  used on input line 409.
+(pdftex.def)             Requested size: 352.31625pt x 92.22157pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[9 <./images/2.7-mitretechniques.png> <./images/2.8-relationsips.png> <./images/2.9-relationsdrops.png> <./images/2.10-relationsother.png>] (Schoen_Keith_Lab11.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-10-24>
  ***********
 Package rerunfilecheck Info: File `Schoen_Keith_Lab11.out' has not changed.
-(rerunfilecheck)             Checksum: 77FB0C03A869B08F79D1FA27850EEF28;1401.
+(rerunfilecheck)             Checksum: 65F4DB6B4E4B59ED11569A2D2D65E561;2541.
  ) 
 Here is how much of TeX's memory you used:
- 24662 strings out of 467871
- 453528 string characters out of 5418375
- 912823 words of memory out of 5000000
- 53089 multiletter control sequences out of 15000+600000
+ 24774 strings out of 467871
+ 456621 string characters out of 5418375
+ 912831 words of memory out of 5000000
+ 53183 multiletter control sequences out of 15000+600000
  636499 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,12n,94p,587b,1395s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\kasch\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\kasch\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1095.pk><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Schoen_Keith_Lab11.pdf (6 pages, 764662 bytes).
+ <C:\Users\kasch\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\kasch\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1095.pk><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/kasch/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on Schoen_Keith_Lab11.pdf (11 pages, 1811490 bytes).
 PDF statistics:
- 134 PDF objects out of 1000 (max. 8388607)
- 24 named destinations out of 1000 (max. 500000)
- 102 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 213 PDF objects out of 1000 (max. 8388607)
+ 39 named destinations out of 1000 (max. 500000)
+ 184 words of extra memory for PDF output out of 10000 (max. 10000000)
 
